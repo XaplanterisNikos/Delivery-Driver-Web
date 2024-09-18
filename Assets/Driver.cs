@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Driver : MonoBehaviour
 {
     // SerializeField είναι ένα χαρακτηριστικό (attribute) στην Unity που επιτρέπει σε ιδιωτικές μεταβλητές (private fields) να εμφανίζονται και να είναι επεξεργάσιμες στο Inspector της Unity, χωρίς να αλλάζει η ορατότητά τους στον κώδικα
     [SerializeField] float steerSpeed = 300f;
-    [SerializeField] float moveSpeed = 20f;
+    [SerializeField] float moveSpeed = 12f;
+    [SerializeField] float slowSpeed = 8f;
+    [SerializeField] float boostSpeed = 30f;
 
-    void Start()
-    {
 
-    }
 
 
     void Update()
@@ -33,4 +33,18 @@ public class Driver : MonoBehaviour
         // μετακινεί το αντικείμενο κατά ένα συγκεκριμένο διάστημα στις συντεταγμένες x, y, και z.
         transform.Translate(0, moveAmount, 0);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Boost")
+        {
+            //Debug.Log("Boost !!!!!!");
+            moveSpeed = boostSpeed;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other){
+        moveSpeed =slowSpeed;
+    }
+
 }
